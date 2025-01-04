@@ -14,11 +14,16 @@ function App() {
   }
 
   return (
-    <ul>
-      {countries.map((country) => (
-        <li key={country.name}>{country.name}</li>
-      ))}
-    </ul>
+    <>
+      <div className="text-3xl font-bold text-blue-500">
+        Hello Tailwind!
+      </div>
+      <ul> 
+        {countries.map((country) => (
+          <li key={country.name}>{country.name}</li>
+        ))}
+      </ul>
+    </>
   );
 }
 
