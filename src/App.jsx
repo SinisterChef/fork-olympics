@@ -1,20 +1,33 @@
-import { Admin, Resource } from 'react-admin';
+import { useEffect, useState } from "react";
 import { supabase } from './utils/supabase';
-import supabaseDataProvider from './dataProvider/supabaseDataProvider';
-import { RecipeList } from './components/RecipeList';
-import { RecipeEdit } from './components/RecipeEdit';
-import { RecipeCreate } from './components/RecipeCreate';
 
 function App() {
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    getRecipes();
+  }, []);
+
+  async function getRecipes() {
+    const { data } = await supabase.from("recipes").select();
+    console.log(data);
+    setRecipes(data);
+  }
+
   return (
-    <Admin dataProvider={supabaseDataProvider(supabase)}>
-      <Resource 
-        name="recipes" 
-        list={RecipeList}
-        edit={RecipeEdit}
-        create={RecipeCreate}
-      />
-    </Admin>
+    <>
+      <div className="text-3xl font-bold text-blue-500">
+        Hello Tailwind!
+      </div>
+      <ul> 
+        {recipes.map((recipe) => (
+          <li key={recipe.id}>
+            Title: {recipe.title}, Description: {recipe.description}, 
+            Prep Time: {recipe.prep_time}, Cook Time: {recipe.cook_time}
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
 
