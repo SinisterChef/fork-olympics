@@ -1,29 +1,20 @@
-import { useEffect, useState } from "react";
+import { Admin, Resource } from 'react-admin';
 import { supabase } from './utils/supabase';
+import supabaseDataProvider from './dataProvider/supabaseDataProvider';
+import { RecipeList } from './components/RecipeList';
+import { RecipeEdit } from './components/RecipeEdit';
+import { RecipeCreate } from './components/RecipeCreate';
 
 function App() {
-  const [countries, setCountries] = useState([]);
-
-  useEffect(() => {
-    getCountries();
-  }, []);
-
-  async function getCountries() {
-    const { data } = await supabase.from("countries").select();
-    setCountries(data);
-  }
-
   return (
-    <>
-      <div className="text-3xl font-bold text-blue-500">
-        Hello Tailwind!
-      </div>
-      <ul> 
-        {countries.map((country) => (
-          <li key={country.name}>{country.name}</li>
-        ))}
-      </ul>
-    </>
+    <Admin dataProvider={supabaseDataProvider(supabase)}>
+      <Resource 
+        name="recipes" 
+        list={RecipeList}
+        edit={RecipeEdit}
+        create={RecipeCreate}
+      />
+    </Admin>
   );
 }
 
