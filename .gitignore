@@ -1,11 +1,16 @@
-# Dependencies
-node_modules
-.env
+# Node modules
+node_modules/
 
 # Build outputs
-dist
-build
+dist/
+build/
+
+# Environment variables
+.env
 
 # IDE files
-.vscode
-.idea
+.vscode/
+.idea/
+
+# CMS uploads
+cms/uploads/
