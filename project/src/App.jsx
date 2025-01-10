@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchRecipes } from './utils/directus';
+import { fetchRecipes, updateRecipe } from './utils/recipeService';
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -10,21 +10,9 @@ function App() {
     const getRecipes = async () => {
       try {
         setLoading(true);
-        console.log("Fetching recipes...");
-        
-        // Fetch recipes from Directus
         const data = await fetchRecipes();
-        console.log("Raw fetched data:", data);
-
-        // Ensure data is in array format and handle edge cases
-        if (Array.isArray(data)) {
-          setRecipes(data);
-        } else {
-          console.error("Unexpected data format:", data);
-          setRecipes([]);
-        }
+        setRecipes(data || []);
       } catch (err) {
-        console.error("Error during fetchRecipes:", err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -37,8 +25,6 @@ function App() {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  console.log("Rendered recipes:", recipes);
-
   return (
     <>
       <div className="text-3xl font-bold text-blue-500">
@@ -47,8 +33,9 @@ function App() {
       <ul>
         {recipes.map((recipe) => (
           <li key={recipe.id}>
-            <strong>Title:</strong> {recipe.Title} <br />
-            <strong>Body:</strong> {recipe.Body}
+            <strong>Title:</strong> {recipe?.Title} <br />
+            <strong>Body:</strong> {recipe?.Body} <br />
+            <strong>Hero Image:</strong> <img src={`http://localhost:8055/assets/${recipe?.Hero_image}`} alt="Hero Image" />
           </li>
         ))}
       </ul>
