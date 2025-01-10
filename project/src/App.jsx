@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchRecipes, updateRecipe } from './utils/recipeService';
+import { fetchRecipes } from './utils/recipeService';
+import RecipePreview from './components/recipePreview';
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -26,20 +27,23 @@ function App() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <>
-      <div className="text-3xl font-bold text-blue-500">
-        Hello Tailwind!
-      </div>
-      <ul>
+  <>
+    <h1>Welcome to Fork Olympics</h1>
+    <div className="container mx-auto p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {recipes.map((recipe) => (
-          <li key={recipe.id}>
-            <strong>Title:</strong> {recipe?.Title} <br />
-            <strong>Body:</strong> {recipe?.Body} <br />
-            <strong>Hero Image:</strong> <img src={`http://localhost:8055/assets/${recipe?.Hero_image}`} alt="Hero Image" />
-          </li>
+          <div key={recipe.id} className="p-4">
+            <RecipePreview
+              url={`http://localhost:8055/items/recipes/${recipe?.id}`}
+              title={recipe?.Title}
+              summary={recipe?.Body}
+              image={`http://localhost:8055/assets/${recipe?.Hero_image}`}
+            />
+          </div>
         ))}
-      </ul>
-    </>
+      </div>
+    </div>
+  </>
   );
 }
 
