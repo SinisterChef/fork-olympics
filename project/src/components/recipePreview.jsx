@@ -18,7 +18,7 @@ const recipePreview = ({ title, image, url, summary }) => {
       </div>
       <div className="p-4 bg-white">
         <h3 className="text-lg font-bold text-darkGray mb-2">{title}</h3>
-        <p className="text-sm text-midGray">{parse(summary)}</p>
+        <div className="text-sm text-midGray">{parse(summary)}</div>
       </div>
     </a>
   );

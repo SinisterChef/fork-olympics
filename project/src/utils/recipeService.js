@@ -6,10 +6,15 @@ export async function fetchRecipes() {
   try {
     const response = await directus.request(readItems('recipes'));
     console.log("Fetched raw API response:", response);
-    return response || []; // Safeguard to return an empty array if null/undefined
+
+    // Separate the homepage featured recipe
+    const homepageFeature = response.find(recipe => recipe.Homepage_feature);
+    const recipes = response.filter(recipe => !recipe.Homepage_feature);
+
+    return { recipes, homepageFeature };
   } catch (error) {
     console.error("Error fetching recipes:", error);
-    return [];
+    return { recipes: [], homepageFeature: null };
   }
 }
 
