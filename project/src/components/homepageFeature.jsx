@@ -13,7 +13,7 @@ const homepageFeature = ({ title, image, url, summary }) => {
         <img
           src={image}
           alt={title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover overflow-hidden rounded-[7px]"
         />
         <div className="absolute -bottom-[-3rem] -right-[15rem] w-1/2 bg-white p-4 m-4 rounded-lg shadow-lg">
           <h3 className="text-lg font-bold text-darkGray mb-2">{title}</h3>
